@@ -6,6 +6,7 @@ import Body from './layouts/Body/Body';
 import JournalList from './components/JournalList/JournalList';
 import JournalForm from './components/JournalForm/JournalForm';
 import { useLocalStorage } from './hooks/use-localstorage.hook';
+import { UserContextProvider } from './context/user.context.jsx';
 
 function mapData(data){
 	if(!data) {
@@ -22,24 +23,25 @@ function App() {
 
 	const addData = (newData) =>{
 		setData( [...mapData(currentData), {
-			text: newData.text,
-			title: newData.title,
+			...newData,
 			date: new Date(newData.date),
 			id: currentData.length> 0 ? Math.max(...currentData.map(data => data.id)) + 1: 1
 		}]);
 	};
 	
 	return (
-		<div className='app'>
-			<LeftPanel>
-				<Header />
-				<JournalAddButton></JournalAddButton>
-				<JournalList data={mapData(currentData)}/>
-			</LeftPanel>
-			<Body>
-				<JournalForm onSubmit={addData}/>
-			</Body>			
-		</div>
+		<UserContextProvider>
+			<div className='app'>
+				<LeftPanel>
+					<Header />
+					<JournalAddButton></JournalAddButton>
+					<JournalList data={mapData(currentData)}/>
+				</LeftPanel>
+				<Body>
+					<JournalForm onSubmit={addData}/> 
+				</Body>			
+			</div>
+		</UserContextProvider>
 	);
 }
 
