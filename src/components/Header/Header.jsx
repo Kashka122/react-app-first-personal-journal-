@@ -1,10 +1,11 @@
 import SelectUser from '../SelectUser/SelectUser';
-import styles from './Header.module.css';
+import Logo from '../Logo/Logo';
 
 function Header(){
+	console.log('HEADER');
 	return (
 		<>
-			<img className={styles.logo} src='../public/logo.svg' alt='Логотип'/>
+			<Logo src={'../public/logo.svg'} />
 			<SelectUser />
 		</>
 	);

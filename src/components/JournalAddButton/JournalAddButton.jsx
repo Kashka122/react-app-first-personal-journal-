@@ -1,10 +1,10 @@
 import CardButton from '../CardButton/CardButton';
 import './JournalAddButton.css';
 
-function JournalAddButton(){
+function JournalAddButton({clearForm}){
 
 	return (
-		<CardButton className='journal-add'>
+		<CardButton className='journal-add' onClick={clearForm}>
 			<img className='plus' src="/public/plus_symbol.svg" alt="Plus" /> Новое воспоминание
 		</CardButton>
 	);

@@ -1,22 +1,23 @@
 import './JournalList.css';
 import CardButton from '../CardButton/CardButton';
 import JournalItem from '../JournalItem/JournalItem';
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { UserContext } from '../../context/user.context';
 
-function JournalList({ data }){
-	const {userId} = useContext(UserContext);
-
+function JournalList({ data, setData  }){
+	const {userId} = useContext(UserContext);	
+	const sortData = (a,b) => { return a.date < b.date?  1 :  -1; };
+	const filteredData = useMemo(()=> data
+		.filter(el => el.userId === userId)
+		.sort(sortData), [data, userId]); 
+		 
 	if (data.length === 0) {
 		return <p>Записей пока нет добавьте первую!</p>;
 	}
-	const sortData = (a,b) => { return a.date < b.date?  1 :  -1; };
 	return  <>
-		{data
-			.filter(el => el.userId === userId)
-			.sort(sortData)
+		{filteredData
 			.map(el => ( 
-				<CardButton key={el.id}>
+				<CardButton key={el.id} onClick={() => setData(el)} >
 					<JournalItem  
 						title={el.title} 
 						text={el.text} 
